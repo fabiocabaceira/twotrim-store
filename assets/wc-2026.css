@@ -1,0 +1,366 @@
+/* ============================================================
+   Two Trim — World Cup 2026 Styles
+   Covers: collection grid section + product kit gallery
+   ============================================================ */
+
+/* ===========================================
+   SECTION 1: WORLD CUP COLLECTION PAGE
+   =========================================== */
+
+/* --- Section wrapper --- */
+.wc-section {
+  padding: 64px 0;
+  background: var(--color-bg, #0a0a0a);
+}
+
+/* --- Section header with accent underline --- */
+.wc-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.wc-header__kicker {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--color-accent, #00e676);
+  margin-bottom: 12px;
+}
+.wc-header__title {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  color: var(--color-text, #f5f5f5);
+  margin-bottom: 12px;
+}
+.wc-header__subtitle {
+  font-size: 16px;
+  color: var(--color-text-muted, #999);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* --- Teams grid: 2-col mobile, 3-col desktop --- */
+.wc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+@media (min-width: 768px) {
+  .wc-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 0 24px;
+  }
+}
+
+/* --- Individual team card --- */
+.wc-card {
+  background: var(--color-surface, #141414);
+  border: 1px solid var(--color-border, #2a2a2a);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.wc-card:hover {
+  border-color: var(--color-accent, #00e676);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .5);
+}
+
+/* --- Kit images row: home + away side by side --- */
+.wc-card__kits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--color-border, #2a2a2a);
+}
+.wc-card__kit {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--color-surface-alt, #1a1a1a);
+}
+.wc-card__kit img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+.wc-card:hover .wc-card__kit img {
+  transform: scale(1.04);
+}
+
+/* --- Home/Away badge on each kit image --- */
+.wc-card__kit-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-radius: 4px;
+  z-index: 2;
+}
+.wc-card__kit-badge--home {
+  background: var(--color-accent, #00e676);
+  color: var(--color-bg, #0a0a0a);
+}
+.wc-card__kit-badge--away {
+  background: rgba(255, 255, 255, .15);
+  color: var(--color-text, #f5f5f5);
+  backdrop-filter: blur(4px);
+}
+
+/* --- Card body: team info + CTA --- */
+.wc-card__body {
+  padding: 16px;
+}
+.wc-card__team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.wc-card__flag {
+  font-size: 20px;
+  line-height: 1;
+}
+.wc-card__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text, #f5f5f5);
+}
+.wc-card__supplier {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--color-text-muted, #999);
+  border: 1px solid var(--color-border, #2a2a2a);
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+.wc-card__desc {
+  font-size: 13px;
+  color: var(--color-text-muted, #999);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  /* Clamp to 3 lines on small screens */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .wc-card__body { padding: 20px; }
+  .wc-card__desc { -webkit-line-clamp: 4; }
+}
+
+/* --- Shop Now button --- */
+.wc-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-bg, #0a0a0a);
+  background: var(--color-accent, #00e676);
+  border-radius: 6px;
+  transition: background .2s ease, transform .2s ease;
+  text-decoration: none;
+}
+.wc-card__cta:hover {
+  background: var(--color-accent-hover, #00c853);
+  transform: translateY(-1px);
+}
+.wc-card__cta-arrow {
+  transition: transform .2s ease;
+}
+.wc-card__cta:hover .wc-card__cta-arrow {
+  transform: translateX(3px);
+}
+
+
+/* ===========================================
+   SECTION 2: PRODUCT PAGE KIT GALLERY
+   =========================================== */
+
+/* --- Gallery container --- */
+.kit-gallery {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+/* --- Main image wrapper with zoom --- */
+.kit-gallery__main {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-surface, #141414);
+  cursor: zoom-in;
+}
+.kit-gallery__main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity .3s ease;
+}
+
+/* --- Zoom lens overlay (desktop only) --- */
+.kit-gallery__zoom {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 200%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity .15s ease;
+}
+.kit-gallery__main:hover .kit-gallery__zoom {
+  opacity: 1;
+}
+/* Hide zoom on touch devices */
+@media (hover: none) {
+  .kit-gallery__zoom { display: none; }
+  .kit-gallery__main { cursor: default; }
+}
+
+/* --- Home / Away badge on main image --- */
+.kit-gallery__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-radius: 6px;
+  z-index: 3;
+  transition: all .25s ease;
+}
+.kit-gallery__badge--home {
+  background: var(--color-accent, #00e676);
+  color: var(--color-bg, #0a0a0a);
+}
+.kit-gallery__badge--away {
+  background: rgba(255, 255, 255, .15);
+  color: var(--color-text, #f5f5f5);
+  backdrop-filter: blur(6px);
+}
+
+/* --- Toggle buttons: Home / Away --- */
+.kit-gallery__toggles {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.kit-gallery__toggle {
+  flex: 1;
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  background: var(--color-surface, #141414);
+  border: 2px solid var(--color-border, #2a2a2a);
+  border-radius: 8px;
+  color: var(--color-text, #f5f5f5);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.kit-gallery__toggle:hover {
+  border-color: var(--color-text-muted, #999);
+}
+.kit-gallery__toggle.is-active {
+  border-color: var(--color-accent, #00e676);
+  color: var(--color-accent, #00e676);
+  background: rgba(0, 230, 118, .08);
+}
+
+/* --- Swipe indicator (mobile only) --- */
+.kit-gallery__swipe-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--color-text-muted, #999);
+  opacity: 1;
+  transition: opacity .5s ease;
+}
+.kit-gallery__swipe-hint.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (min-width: 768px) {
+  .kit-gallery__swipe-hint { display: none; }
+}
+
+/* --- Dot indicators --- */
+.kit-gallery__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.kit-gallery__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border, #2a2a2a);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.kit-gallery__dot.is-active {
+  background: var(--color-accent, #00e676);
+  transform: scale(1.25);
+}
+
+/* --- Thumbnail strip below main image --- */
+.kit-gallery__thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.kit-gallery__thumbs::-webkit-scrollbar { display: none; }
+.kit-gallery__thumb {
+  flex: 0 0 64px;
+  height: 80px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color .2s ease;
+  background: var(--color-surface-alt, #1a1a1a);
+}
+.kit-gallery__thumb:hover,
+.kit-gallery__thumb.is-active {
+  border-color: var(--color-accent, #00e676);
+}
+.kit-gallery__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

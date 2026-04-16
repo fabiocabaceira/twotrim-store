@@ -1,0 +1,20 @@
+{
+  "general": {
+    "cart": "Cart",
+    "search": "Search",
+    "close": "Close",
+    "menu": "Menu"
+  },
+  "products": {
+    "add_to_cart": "Add to Cart",
+    "sold_out": "Sold Out",
+    "sale": "Sale",
+    "size_guide": "Size Guide"
+  },
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "checkout": "Checkout",
+    "total": "Total"
+  }
+}

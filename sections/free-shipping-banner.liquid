@@ -1,0 +1,19 @@
+<div class="shipping-banner">
+  <div class="container">
+    {{ section.settings.text }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Free Shipping Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Banner text",
+      "default": "🚚 Free shipping on orders over €50 — Portugal & EU"
+    }
+  ]
+}
+{% endschema %}

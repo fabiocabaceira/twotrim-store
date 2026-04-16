@@ -1,0 +1,237 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+
+{%- comment -%}
+  Detect if this product has World Cup kit images (via metafields or tags).
+  If yes, render the kit gallery with home/away toggle + zoom.
+  If no, render the standard product gallery.
+{%- endcomment -%}
+{%- assign has_kit_gallery = false -%}
+{%- if product.metafields.twotrim.kit_home.value != blank -%}
+  {%- assign has_kit_gallery = true -%}
+{%- elsif product.tags contains 'world-cup-2026' and product.images.size >= 2 -%}
+  {%- assign has_kit_gallery = true -%}
+{%- endif -%}
+
+{%- comment -%} Load WC 2026 assets only when needed {%- endcomment -%}
+{%- if has_kit_gallery and section.settings.enable_kit_gallery -%}
+  {{ 'wc-2026.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+
+<section class="product section">
+  <div class="container">
+    <!-- Breadcrumbs -->
+    <nav class="product__breadcrumbs">
+      <a href="/">Home</a> <span>/</span>
+      {% if collection %}
+        <a href="{{ collection.url }}">{{ collection.title }}</a> <span>/</span>
+      {% endif %}
+      <span>{{ product.title }}</span>
+    </nav>
+
+    <div class="product__layout">
+      <!-- Gallery: Kit gallery for WC products, standard gallery for everything else -->
+      <div class="product__gallery">
+        {% if has_kit_gallery and section.settings.enable_kit_gallery %}
+          {%- comment -%} World Cup kit gallery with home/away toggle + zoom {%- endcomment -%}
+          {% render 'wc-kit-gallery', product: product %}
+        {% else %}
+          {%- comment -%} Standard product gallery {%- endcomment -%}
+          <div class="product__main-image">
+            <img
+              src="{{ current_variant.featured_image | default: product.featured_image | image_url: width: 800 }}"
+              alt="{{ product.title }}"
+              loading="eager"
+            >
+          </div>
+          {% if product.images.size > 1 %}
+            <div class="product__thumbs">
+              {% for image in product.images %}
+                <button
+                  class="product__thumb{% if forloop.first %} is-active{% endif %}"
+                  data-full="{{ image | image_url: width: 800 }}"
+                >
+                  <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | default: product.title }}" loading="lazy">
+                </button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+
+      <!-- Product Info -->
+      <div class="product__info">
+        <h1 class="heading-lg product__title">{{ product.title }}</h1>
+
+        <div class="product__price-row">
+          <span class="product__price">{{ current_variant.price | money }}</span>
+          {% if current_variant.compare_at_price > current_variant.price %}
+            <span class="product__compare-price">{{ current_variant.compare_at_price | money }}</span>
+            <span class="badge badge--sale">Sale</span>
+          {% endif %}
+        </div>
+
+        <!-- Urgency Nudge -->
+        {% if section.settings.show_urgency %}
+          <div class="urgency">
+            <span class="urgency__dot"></span>
+            <span>{{ section.settings.urgency_text }}</span>
+          </div>
+        {% endif %}
+
+        <!-- Delivery Estimate -->
+        <div class="product__delivery">
+          <span class="product__delivery-icon">📦</span>
+          <span>{{ section.settings.delivery_text }}</span>
+        </div>
+
+        <form action="/cart/add" method="post">
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+          <!-- Variant Selectors -->
+          {% for option in product.options_with_values %}
+            <div class="product__variants">
+              <p class="product__variant-label">{{ option.name }}</p>
+              <div class="product__variant-options">
+                {% for value in option.values %}
+                  {%- assign option_available = true -%}
+                  {% for variant in product.variants %}
+                    {% if variant.options[forloop.parentloop.index0] == value %}
+                      {% if variant.available == false %}
+                        {%- assign option_available = false -%}
+                      {% else %}
+                        {%- assign option_available = true -%}
+                        {% break %}
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                  <button
+                    type="button"
+                    class="product__variant-btn{% if option.selected_value == value %} is-selected{% endif %}{% unless option_available %} is-soldout{% endunless %}"
+                    data-value="{{ value }}"
+                    {% unless option_available %}disabled{% endunless %}
+                  >
+                    {{ value }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+
+          <!-- Size Guide Toggle -->
+          <button type="button" class="product__size-guide-toggle">📏 Size Guide</button>
+
+          <!-- Add to Cart -->
+          <button type="submit" class="btn btn--primary btn--full btn--lg product__add-to-cart"{% unless current_variant.available %} disabled{% endunless %}>
+            {% if current_variant.available %}
+              Add to Cart — {{ current_variant.price | money }}
+            {% else %}
+              Sold Out
+            {% endif %}
+          </button>
+        </form>
+
+        {% if product.description != blank %}
+          <div style="margin-top:24px;font-size:14px;color:var(--color-text-muted);line-height:1.7">
+            {{ product.description }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky Add to Cart (mobile) -->
+<div class="product__sticky-atc">
+  <div class="product__sticky-info">
+    <p class="product__sticky-name">{{ product.title }}</p>
+    <p class="product__sticky-price">{{ current_variant.price | money }}</p>
+  </div>
+  <form action="/cart/add" method="post" style="margin:0">
+    <input type="hidden" name="id" value="{{ current_variant.id }}">
+    <button type="submit" class="btn btn--primary"{% unless current_variant.available %} disabled{% endunless %}>
+      {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
+    </button>
+  </form>
+</div>
+
+<!-- Size Guide Modal -->
+<div class="size-guide-modal">
+  <div class="size-guide-modal__inner">
+    <button class="size-guide-modal__close" aria-label="Close">✕</button>
+    <h3 class="heading-md">Size Guide — Football Jerseys</h3>
+    <p class="text-muted" style="margin-top:8px;font-size:13px">Measurements in cm. When in between sizes, go one size up.</p>
+    <table class="size-guide-table">
+      <thead>
+        <tr><th>Size</th><th>Chest</th><th>Length</th><th>EU</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>S</td><td>96</td><td>70</td><td>44-46</td></tr>
+        <tr><td>M</td><td>102</td><td>72</td><td>48-50</td></tr>
+        <tr><td>L</td><td>108</td><td>74</td><td>52-54</td></tr>
+        <tr><td>XL</td><td>114</td><td>76</td><td>56-58</td></tr>
+        <tr><td>XXL</td><td>120</td><td>78</td><td>60-62</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Variant data for JS -->
+<script>
+  window.twotrimVariants = [
+    {%- for variant in product.variants -%}
+      {
+        id: {{ variant.id }},
+        available: {{ variant.available }},
+        price: {{ variant.price }},
+        priceFormatted: "{{ variant.price | money }}",
+        options: {{ variant.options | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ];
+</script>
+
+{%- comment -%} Load kit gallery JS only when needed {%- endcomment -%}
+{%- if has_kit_gallery and section.settings.enable_kit_gallery -%}
+  <script src="{{ 'wc-2026.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Kit Gallery (World Cup 2026)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_kit_gallery",
+      "label": "Enable kit gallery for World Cup products",
+      "default": true,
+      "info": "Shows home/away toggle with zoom for products tagged 'world-cup-2026' or with kit metafields set."
+    },
+    {
+      "type": "header",
+      "content": "Urgency & Delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_urgency",
+      "label": "Show urgency nudge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "urgency_text",
+      "label": "Urgency text",
+      "default": "12 people are viewing this right now"
+    },
+    {
+      "type": "text",
+      "id": "delivery_text",
+      "label": "Delivery estimate",
+      "default": "Order today — estimated delivery in 7-15 business days"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,48 @@
+<div class="exit-popup">
+  <div class="exit-popup__inner">
+    <button class="exit-popup__close" aria-label="Close">✕</button>
+    <p style="font-size:36px;margin-bottom:12px">⚽</p>
+    <h3 class="exit-popup__title">{{ section.settings.title }}</h3>
+    <p class="exit-popup__text">{{ section.settings.text }}</p>
+
+    {% form 'customer', class: 'exit-popup__form' %}
+      <input
+        type="email"
+        name="contact[email]"
+        class="exit-popup__input"
+        placeholder="Your email"
+        required
+        autocomplete="email"
+      >
+      <input type="hidden" name="contact[tags]" value="exit-popup,discount-10">
+      <button type="submit" class="btn btn--primary btn--full">{{ section.settings.button_text }}</button>
+    {% endform %}
+    <p style="font-size:11px;color:var(--color-text-muted);margin-top:10px">No spam. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Exit Intent Popup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Wait — 10% off your first kit"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Body text",
+      "default": "Drop your email and we'll send you a discount code. World Cup 2026 kits are dropping soon — don't miss out."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Get My 10% Off"
+    }
+  ]
+}
+{% endschema %}

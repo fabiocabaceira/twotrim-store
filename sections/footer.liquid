@@ -1,0 +1,80 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <!-- Brand -->
+      <div>
+        <p class="header__logo" style="margin-bottom:12px">TWO <span>TRIM</span></p>
+        <p style="font-size:14px;color:var(--color-text-muted);line-height:1.6">{{ section.settings.tagline }}</p>
+      </div>
+
+      <!-- Shop -->
+      <div>
+        <p class="footer__heading">Shop</p>
+        <div class="footer__links">
+          {% for link in section.settings.shop_menu.links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <p class="footer__heading">Info</p>
+        <div class="footer__links">
+          {% for link in section.settings.info_menu.links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Payment -->
+      <div>
+        <p class="footer__heading">We Accept</p>
+        <div class="footer__payment">
+          <span class="footer__payment-icon">Visa</span>
+          <span class="footer__payment-icon">Mastercard</span>
+          <span class="footer__payment-icon">MB Way</span>
+          <span class="footer__payment-icon">PayPal</span>
+          <span class="footer__payment-icon">Apple Pay</span>
+        </div>
+        <p style="font-size:13px;color:var(--color-text-muted);margin-top:16px">{{ section.settings.support_text }}</p>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Brand tagline",
+      "default": "Premium football jerseys for real fans. Club and national team kits shipped across Europe."
+    },
+    {
+      "type": "link_list",
+      "id": "shop_menu",
+      "label": "Shop menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "info_menu",
+      "label": "Info menu",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "support_text",
+      "label": "Support note",
+      "default": "Questions? DM us on Instagram @twotrim"
+    }
+  ]
+}
+{% endschema %}

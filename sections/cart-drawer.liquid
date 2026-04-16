@@ -1,0 +1,29 @@
+<div class="cart-drawer__overlay"></div>
+<div class="cart-drawer">
+  <div class="cart-drawer__header">
+    <span class="cart-drawer__title">Your Cart</span>
+    <button class="cart-drawer__close" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cart-drawer__body">
+    <div class="cart-drawer__empty">
+      <p style="font-size:32px;margin-bottom:12px">🛒</p>
+      <p>Your cart is empty</p>
+      <a href="/collections/all" class="btn btn--outline" style="margin-top:16px">Shop Now</a>
+    </div>
+  </div>
+  <div class="cart-drawer__footer">
+    <div class="cart-drawer__total">
+      <span>Total</span>
+      <span class="cart-drawer__total-price">€0.00</span>
+    </div>
+    <a href="/checkout" class="btn btn--primary btn--full btn--lg">Checkout</a>
+    <p class="cart-drawer__shipping-note">Add €50.00 more for free shipping</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": []
+}
+{% endschema %}
