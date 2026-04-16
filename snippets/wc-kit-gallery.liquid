@@ -1,0 +1,122 @@
+{% comment %}
+  ============================================================
+  Two Trim — World Cup Kit Gallery Snippet
+  ============================================================
+  Renders a home/away kit toggle gallery on the product page.
+
+  Usage:
+    {% render 'wc-kit-gallery', product: product %}
+
+  Requirements:
+  - Product must have metafields set:
+      twotrim.kit_home  (file_reference — image)
+      twotrim.kit_away  (file_reference — image)
+  - If metafields are empty, falls back to standard product images:
+      First image = home, second image = away
+  - CSS: wc-2026.css (loaded by the section)
+  - JS:  wc-2026.js  (loaded by the section)
+
+  Metafield setup in Shopify Admin:
+  1. Settings > Custom data > Products > Add definition
+  2. Name: "Kit Home Image"  Namespace: twotrim.kit_home  Type: File (image)
+  3. Name: "Kit Away Image"  Namespace: twotrim.kit_away  Type: File (image)
+  ============================================================
+{% endcomment %}
+
+{%- comment -%} --- Resolve image URLs: prefer metafields, fallback to product images --- {%- endcomment -%}
+{%- assign home_img = nil -%}
+{%- assign away_img = nil -%}
+
+{%- comment -%} Try metafields first {%- endcomment -%}
+{%- if product.metafields.twotrim.kit_home.value != blank -%}
+  {%- assign home_img = product.metafields.twotrim.kit_home.value | image_url: width: 960 -%}
+{%- endif -%}
+{%- if product.metafields.twotrim.kit_away.value != blank -%}
+  {%- assign away_img = product.metafields.twotrim.kit_away.value | image_url: width: 960 -%}
+{%- endif -%}
+
+{%- comment -%} Fallback: use first two product images {%- endcomment -%}
+{%- if home_img == nil and product.images.size >= 1 -%}
+  {%- assign home_img = product.images[0] | image_url: width: 960 -%}
+{%- endif -%}
+{%- if away_img == nil and product.images.size >= 2 -%}
+  {%- assign away_img = product.images[1] | image_url: width: 960 -%}
+{%- endif -%}
+
+{%- comment -%} Only render the kit gallery if we have at least the home image {%- endcomment -%}
+{%- if home_img -%}
+<div
+  class="kit-gallery"
+  data-home-img="{{ home_img }}"
+  data-away-img="{{ away_img | default: home_img }}"
+>
+  {%- comment -%} --- Main image with zoom overlay --- {%- endcomment -%}
+  <div class="kit-gallery__main" role="img" aria-label="{{ product.title }} kit image">
+    <img
+      class="kit-gallery__main-img"
+      src="{{ home_img }}"
+      alt="{{ product.title }} Home Kit"
+      loading="eager"
+      fetchpriority="high"
+      width="960"
+      height="1280"
+    >
+    {%- comment -%} Zoom layer: 2x background follows mouse on desktop {%- endcomment -%}
+    <div class="kit-gallery__zoom" style="background-image:url({{ home_img }})"></div>
+
+    {%- comment -%} Home/Away badge {%- endcomment -%}
+    <span class="kit-gallery__badge kit-gallery__badge--home">Home</span>
+  </div>
+
+  {%- comment -%} --- Home / Away toggle buttons --- {%- endcomment -%}
+  {% if away_img and away_img != home_img %}
+    <div class="kit-gallery__toggles">
+      <button class="kit-gallery__toggle is-active" data-kit="home" type="button">
+        🏠 Home Kit
+      </button>
+      <button class="kit-gallery__toggle" data-kit="away" type="button">
+        ✈️ Away Kit
+      </button>
+    </div>
+
+    {%- comment -%} --- Dot indicators --- {%- endcomment -%}
+    <div class="kit-gallery__dots">
+      <button class="kit-gallery__dot is-active" data-kit="home" aria-label="Home kit"></button>
+      <button class="kit-gallery__dot" data-kit="away" aria-label="Away kit"></button>
+    </div>
+
+    {%- comment -%} --- Mobile swipe hint (hidden after first swipe) --- {%- endcomment -%}
+    <p class="kit-gallery__swipe-hint">
+      <span>👆</span> Swipe to see away kit
+    </p>
+  {% endif %}
+
+  {%- comment -%} --- Thumbnail strip: home + away + extra product images --- {%- endcomment -%}
+  <div class="kit-gallery__thumbs">
+    {%- comment -%} Home kit thumb {%- endcomment -%}
+    <button class="kit-gallery__thumb is-active" data-kit="home" aria-label="Home kit thumbnail">
+      <img src="{{ home_img | replace: 'width=960', 'width=120' }}" alt="Home kit" loading="lazy" width="64" height="80">
+    </button>
+
+    {%- comment -%} Away kit thumb {%- endcomment -%}
+    {% if away_img and away_img != home_img %}
+      <button class="kit-gallery__thumb" data-kit="away" aria-label="Away kit thumbnail">
+        <img src="{{ away_img | replace: 'width=960', 'width=120' }}" alt="Away kit" loading="lazy" width="64" height="80">
+      </button>
+    {% endif %}
+
+    {%- comment -%} Additional product images (skip first two since they're home/away) {%- endcomment -%}
+    {% if product.images.size > 2 %}
+      {% for image in product.images offset:2 %}
+        <button
+          class="kit-gallery__thumb"
+          data-extra-img="{{ image | image_url: width: 960 }}"
+          aria-label="Product image {{ forloop.index | plus: 2 }}"
+        >
+          <img src="{{ image | image_url: width: 120 }}" alt="{{ image.alt | default: product.title }}" loading="lazy" width="64" height="80">
+        </button>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{%- endif -%}

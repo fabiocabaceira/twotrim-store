@@ -1,0 +1,284 @@
+{% comment %}
+  ============================================================
+  Two Trim — World Cup 2026 Collection Section
+  ============================================================
+  Displays 6 national teams in a grid (3-col desktop, 2-col mobile).
+  Each card shows home + away kit images side by side, team info,
+  supplier badge, description, and a Shop Now CTA.
+
+  Fully customisable from the Shopify Theme Editor:
+  - Section-level: kicker, title, subtitle, accent colour override
+  - Block-level (per team): name, flag, supplier, description,
+    home/away images, collection link, visibility toggle
+
+  Images: Upload kit images to Shopify Files, then select them
+  via the image_picker in the theme editor. Alternatively, use
+  product metafields (namespace: twotrim.kit_home / twotrim.kit_away)
+  to connect images to products programmatically.
+  ============================================================
+{% endcomment %}
+
+{{ 'wc-2026.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.enabled %}
+<section class="wc-section" id="world-cup-2026">
+  <div style="max-width:1200px;margin:0 auto;padding:0 16px">
+
+    {%- comment -%} --- Section header --- {%- endcomment -%}
+    <div class="wc-header">
+      {% if section.settings.kicker != blank %}
+        <p class="wc-header__kicker">{{ section.settings.kicker }}</p>
+      {% endif %}
+      <h2 class="wc-header__title">{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="wc-header__subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    {%- comment -%} --- Teams grid --- {%- endcomment -%}
+    <div class="wc-grid">
+      {% for block in section.blocks %}
+        {% if block.settings.visible %}
+          <div class="wc-card" {{ block.shopify_attributes }}>
+
+            {%- comment -%} Kit images: home (left) + away (right) {%- endcomment -%}
+            <div class="wc-card__kits">
+              {%- comment -%} Home kit {%- endcomment -%}
+              <div class="wc-card__kit">
+                <span class="wc-card__kit-badge wc-card__kit-badge--home">Home</span>
+                {% if block.settings.home_image %}
+                  <img
+                    src="{{ block.settings.home_image | image_url: width: 480 }}"
+                    alt="{{ block.settings.name }} Home Kit 2026"
+                    loading="lazy"
+                    width="480"
+                    height="640"
+                  >
+                {% else %}
+                  {%- comment -%} Placeholder when no image uploaded yet {%- endcomment -%}
+                  <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;background:var(--color-surface-alt,#1a1a1a)">
+                    👕
+                  </div>
+                {% endif %}
+              </div>
+
+              {%- comment -%} Away kit {%- endcomment -%}
+              <div class="wc-card__kit">
+                <span class="wc-card__kit-badge wc-card__kit-badge--away">Away</span>
+                {% if block.settings.away_image %}
+                  <img
+                    src="{{ block.settings.away_image | image_url: width: 480 }}"
+                    alt="{{ block.settings.name }} Away Kit 2026"
+                    loading="lazy"
+                    width="480"
+                    height="640"
+                  >
+                {% else %}
+                  <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;background:var(--color-surface-alt,#1a1a1a)">
+                    👕
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            {%- comment -%} Card body: team info + CTA {%- endcomment -%}
+            <div class="wc-card__body">
+              <div class="wc-card__team">
+                {% if block.settings.flag != blank %}
+                  <span class="wc-card__flag">{{ block.settings.flag }}</span>
+                {% endif %}
+                <span class="wc-card__name">{{ block.settings.name }}</span>
+              </div>
+
+              {% if block.settings.supplier != blank %}
+                <span class="wc-card__supplier">{{ block.settings.supplier }}</span>
+              {% endif %}
+
+              {% if block.settings.description != blank %}
+                <p class="wc-card__desc">{{ block.settings.description }}</p>
+              {% endif %}
+
+              {% if block.settings.collection_link != blank %}
+                <a href="{{ block.settings.collection_link }}" class="wc-card__cta">
+                  Shop Now
+                  <span class="wc-card__cta-arrow">→</span>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "World Cup 2026",
+  "tag": "section",
+  "class": "wc-2026-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable section",
+      "default": true,
+      "info": "Toggle the entire World Cup section on/off"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker text",
+      "default": "FIFA World Cup 2026"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "World Cup 2026 Kits"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "Rep your nation at the 2026 World Cup. Premium fan jerseys — home and away kits for every team."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "team",
+      "name": "National Team",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "visible",
+          "label": "Show this team",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Team name",
+          "default": "Portugal"
+        },
+        {
+          "type": "text",
+          "id": "flag",
+          "label": "Flag emoji",
+          "default": "🇵🇹"
+        },
+        {
+          "type": "text",
+          "id": "supplier",
+          "label": "Kit supplier",
+          "default": "Puma",
+          "info": "Nike, Adidas, Puma, etc."
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Kit description",
+          "default": "Deep red home with wave pattern. Aquamarine away with V-panel design."
+        },
+        {
+          "type": "image_picker",
+          "id": "home_image",
+          "label": "Home kit image"
+        },
+        {
+          "type": "image_picker",
+          "id": "away_image",
+          "label": "Away kit image"
+        },
+        {
+          "type": "url",
+          "id": "collection_link",
+          "label": "Collection link",
+          "info": "Link to the team's product collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "World Cup 2026",
+      "settings": {
+        "enabled": true,
+        "kicker": "FIFA World Cup 2026",
+        "title": "World Cup 2026 Kits",
+        "subtitle": "Rep your nation at the 2026 World Cup. Premium fan jerseys — home and away kits for every team."
+      },
+      "blocks": [
+        {
+          "type": "team",
+          "settings": {
+            "visible": true,
+            "name": "England",
+            "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+            "supplier": "Nike",
+            "description": "White home with jacquard pattern. Red away with central badge design.",
+            "collection_link": "/collections/england"
+          }
+        },
+        {
+          "type": "team",
+          "settings": {
+            "visible": true,
+            "name": "France",
+            "flag": "🇫🇷",
+            "supplier": "Nike",
+            "description": "Royal blue with copper FFF pattern. Mint green away — fresh and bold.",
+            "collection_link": "/collections/france"
+          }
+        },
+        {
+          "type": "team",
+          "settings": {
+            "visible": true,
+            "name": "Netherlands",
+            "flag": "🇳🇱",
+            "supplier": "Nike",
+            "description": "Classic orange home with black details. White away with orange centre stripe.",
+            "collection_link": "/collections/netherlands"
+          }
+        },
+        {
+          "type": "team",
+          "settings": {
+            "visible": true,
+            "name": "Germany",
+            "flag": "🇩🇪",
+            "supplier": "Adidas",
+            "description": "White with tricolour V design, tribute to 1990. Navy and mint away kit.",
+            "collection_link": "/collections/germany"
+          }
+        },
+        {
+          "type": "team",
+          "settings": {
+            "visible": true,
+            "name": "Brazil",
+            "flag": "🇧🇷",
+            "supplier": "Nike / Jordan",
+            "description": "Canary yellow with flag pattern, 1970 inspired. Dark blue Jordan collab away.",
+            "collection_link": "/collections/brazil"
+          }
+        },
+        {
+          "type": "team",
+          "settings": {
+            "visible": true,
+            "name": "Portugal",
+            "flag": "🇵🇹",
+            "supplier": "Puma",
+            "description": "Deep red with wave pattern. Aquamarine away with V-panel design.",
+            "collection_link": "/collections/portugal"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

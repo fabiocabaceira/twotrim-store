@@ -1,0 +1,72 @@
+<section class="section section--lg">
+  <div class="container">
+    <p class="heading-sm text-center">{{ section.settings.kicker }}</p>
+    <h2 class="heading-lg text-center" style="margin-top:8px;margin-bottom:40px">{{ section.settings.title }}</h2>
+
+    <div class="features__grid">
+      {% for block in section.blocks %}
+        <div class="feature" {{ block.shopify_attributes }}>
+          <div class="feature__icon">{{ block.settings.icon }}</div>
+          <h3 class="feature__title">{{ block.settings.title }}</h3>
+          <p class="feature__text">{{ block.settings.text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why Two Trim",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Why Two Trim?"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Built for Real Fans"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "👕"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Premium Quality"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Stitched badges, breathable fabric, true-to-match details. These aren't cheap knockoffs."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Two Trim",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "👕", "title": "Premium Quality", "text": "Stitched badges, breathable fabric, true-to-match details. These aren't cheap knockoffs." } },
+        { "type": "feature", "settings": { "icon": "🚀", "title": "Fast EU Shipping", "text": "7-15 day delivery across Europe. Track every order from dispatch to your door." } },
+        { "type": "feature", "settings": { "icon": "💬", "title": "Fan-First Support", "text": "Real people. Quick replies. We're football fans too — we get it." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

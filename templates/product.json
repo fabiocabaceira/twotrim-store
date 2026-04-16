@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_urgency": true,
+        "urgency_text": "12 people are viewing this right now",
+        "delivery_text": "Order today — estimated delivery in 7-15 business days"
+      }
+    }
+  },
+  "order": ["main"]
+}

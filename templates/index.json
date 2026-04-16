@@ -1,0 +1,114 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "kicker": "World Cup 2026 Collection",
+        "title": "Rep Your Nation. Look Elite.",
+        "subtitle": "Premium football jerseys for every fan. Club and national team kits — delivered to your door across Portugal and Europe.",
+        "cta_text": "Shop Jerseys",
+        "cta_url": "/collections/all",
+        "cta2_text": "World Cup 2026",
+        "cta2_url": "/collections/world-cup-2026"
+      }
+    },
+    "trust-bar": {
+      "type": "trust-bar",
+      "blocks": {
+        "ship": { "type": "item", "settings": { "icon": "🚚", "text": "Free Shipping Over €50" } },
+        "returns": { "type": "item", "settings": { "icon": "↩️", "text": "Easy 30-Day Returns" } },
+        "secure": { "type": "item", "settings": { "icon": "🔒", "text": "Secure Checkout" } },
+        "fans": { "type": "item", "settings": { "icon": "⭐", "text": "5,000+ Happy Fans" } }
+      },
+      "block_order": ["ship", "returns", "secure", "fans"]
+    },
+    "featured-clubs": {
+      "type": "featured-clubs",
+      "settings": {
+        "kicker": "Shop by Club",
+        "title": "Find Your Kit"
+      },
+      "blocks": {
+        "benfica": { "type": "club", "settings": { "name": "Benfica", "link": "/collections/benfica" } },
+        "porto": { "type": "club", "settings": { "name": "FC Porto", "link": "/collections/porto" } },
+        "sporting": { "type": "club", "settings": { "name": "Sporting CP", "link": "/collections/sporting" } },
+        "real-madrid": { "type": "club", "settings": { "name": "Real Madrid", "link": "/collections/real-madrid" } },
+        "barcelona": { "type": "club", "settings": { "name": "Barcelona", "link": "/collections/barcelona" } },
+        "man-united": { "type": "club", "settings": { "name": "Man United", "link": "/collections/manchester-united" } },
+        "portugal": { "type": "club", "settings": { "name": "Portugal 🇵🇹", "link": "/collections/portugal" } },
+        "brazil": { "type": "club", "settings": { "name": "Brazil 🇧🇷", "link": "/collections/brazil" } },
+        "argentina": { "type": "club", "settings": { "name": "Argentina 🇦🇷", "link": "/collections/argentina" } }
+      },
+      "block_order": ["benfica", "porto", "sporting", "real-madrid", "barcelona", "man-united", "portugal", "brazil", "argentina"]
+    },
+    "best-sellers": {
+      "type": "best-sellers",
+      "settings": {
+        "kicker": "Most Popular",
+        "title": "Best Sellers"
+      }
+    },
+    "why-two-trim": {
+      "type": "why-two-trim",
+      "settings": {
+        "kicker": "Why Two Trim?",
+        "title": "Built for Real Fans"
+      },
+      "blocks": {
+        "quality": { "type": "feature", "settings": { "icon": "👕", "title": "Premium Quality", "text": "Stitched badges, breathable fabric, true-to-match details. These aren't cheap knockoffs." } },
+        "shipping": { "type": "feature", "settings": { "icon": "🚀", "title": "Fast EU Shipping", "text": "7-15 day delivery across Europe. Track every order from dispatch to your door." } },
+        "support": { "type": "feature", "settings": { "icon": "💬", "title": "Fan-First Support", "text": "Real people. Quick replies. We're football fans too — we get it." } }
+      },
+      "block_order": ["quality", "shipping", "support"]
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "kicker": "Reviews",
+        "title": "What Fans Are Saying"
+      },
+      "blocks": {
+        "r1": { "type": "review", "settings": { "text": "Quality is insane for the price. My Benfica kit looks exactly like the real thing.", "author": "Miguel R.", "meta": "Lisbon · Benfica Home 24/25" } },
+        "r2": { "type": "review", "settings": { "text": "Ordered a Porto away kit. Arrived in 10 days. Fit is perfect, fabric feels premium.", "author": "João P.", "meta": "Porto · Porto Away 24/25" } },
+        "r3": { "type": "review", "settings": { "text": "Got the Sporting third kit for my brother. He thought it was official. Enough said.", "author": "Ana S.", "meta": "Braga · Sporting Third 24/25" } }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    },
+    "world-cup-2026": {
+      "type": "world-cup-2026",
+      "settings": {
+        "enabled": true,
+        "kicker": "FIFA World Cup 2026",
+        "title": "World Cup 2026 Kits",
+        "subtitle": "Rep your nation at the 2026 World Cup. Premium fan jerseys — home and away kits for every team."
+      },
+      "blocks": {
+        "england": { "type": "team", "settings": { "visible": true, "name": "England", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "supplier": "Nike", "description": "White home with jacquard pattern. Red away with central badge design.", "collection_link": "/collections/england" } },
+        "france": { "type": "team", "settings": { "visible": true, "name": "France", "flag": "🇫🇷", "supplier": "Nike", "description": "Royal blue with copper FFF pattern. Mint green away — fresh and bold.", "collection_link": "/collections/france" } },
+        "netherlands": { "type": "team", "settings": { "visible": true, "name": "Netherlands", "flag": "🇳🇱", "supplier": "Nike", "description": "Classic orange home with black details. White away with orange centre stripe.", "collection_link": "/collections/netherlands" } },
+        "germany": { "type": "team", "settings": { "visible": true, "name": "Germany", "flag": "🇩🇪", "supplier": "Adidas", "description": "White with tricolour V design, tribute to 1990. Navy and mint away kit.", "collection_link": "/collections/germany" } },
+        "brazil": { "type": "team", "settings": { "visible": true, "name": "Brazil", "flag": "🇧🇷", "supplier": "Nike / Jordan", "description": "Canary yellow with flag pattern, 1970 inspired. Dark blue Jordan collab away.", "collection_link": "/collections/brazil" } },
+        "portugal": { "type": "team", "settings": { "visible": true, "name": "Portugal", "flag": "🇵🇹", "supplier": "Puma", "description": "Deep red with wave pattern. Aquamarine away with V-panel design.", "collection_link": "/collections/portugal" } }
+      },
+      "block_order": ["england", "france", "netherlands", "germany", "brazil", "portugal"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "kicker": "Stay in the Game",
+        "title": "Get 10% Off Your First Order",
+        "subtitle": "Drop your email for exclusive drops, World Cup kit launches, and deals you won't find anywhere else."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust-bar",
+    "featured-clubs",
+    "best-sellers",
+    "world-cup-2026",
+    "why-two-trim",
+    "reviews",
+    "newsletter"
+  ]
+}

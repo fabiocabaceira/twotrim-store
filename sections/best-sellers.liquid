@@ -1,0 +1,71 @@
+<section class="section">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px">
+      <div>
+        <p class="heading-sm">{{ section.settings.kicker }}</p>
+        <h2 class="heading-lg" style="margin-top:8px">{{ section.settings.title }}</h2>
+      </div>
+      {% if section.settings.collection %}
+        <a href="{{ section.settings.collection.url }}" class="btn btn--outline">View All</a>
+      {% endif %}
+    </div>
+
+    <div class="carousel">
+      <div class="carousel__track">
+        {% if section.settings.collection %}
+          {% for product in section.settings.collection.products limit: 12 %}
+            <div class="carousel__item">
+              {% render 'product-card', product: product %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for i in (1..8) %}
+            <div class="carousel__item">
+              <div class="card">
+                <div class="card__img">
+                  {{ 'product-' | append: i | placeholder_svg_tag }}
+                </div>
+                <div class="card__body">
+                  <p class="card__title">Sample Jersey {{ i }}</p>
+                  <p class="card__price">€34.99</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <button class="carousel__nav carousel__nav--prev" aria-label="Previous">‹</button>
+      <button class="carousel__nav carousel__nav--next" aria-label="Next">›</button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Best Sellers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Most Popular"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Sellers"
+    }
+  ]
+}
+{% endschema %}

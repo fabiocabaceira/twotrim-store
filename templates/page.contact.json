@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-contact",
+      "settings": {
+        "title": "Get in Touch",
+        "subtitle": "Question about sizing, shipping, or your order? We're here to help."
+      }
+    }
+  },
+  "order": ["main"]
+}

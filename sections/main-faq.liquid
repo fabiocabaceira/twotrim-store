@@ -1,0 +1,62 @@
+<section class="section">
+  <div class="container page-content">
+    <h1 class="heading-lg text-center" style="margin-bottom:40px">{{ section.settings.title }}</h1>
+
+    <div class="faq-list">
+      {% for block in section.blocks %}
+        <div class="faq__item" {{ block.shopify_attributes }}>
+          <button class="faq__question">{{ block.settings.question }}</button>
+          <div class="faq__answer">
+            <div class="faq__answer-inner">{{ block.settings.answer }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page title",
+      "default": "Frequently Asked Questions"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Page",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "Are these official jerseys?", "answer": "<p>Our jerseys are high-quality fan/replica kits. They are not official licensed products from the clubs or national teams. They feature premium stitched badges, breathable fabric, and true-to-match designs at a fraction of the official price.</p>" } },
+        { "type": "faq", "settings": { "question": "How long does shipping take?", "answer": "<p>Standard delivery takes 7-15 business days within Europe. Portugal orders typically arrive in 7-10 days. You'll receive a tracking number once your order ships.</p>" } },
+        { "type": "faq", "settings": { "question": "What is your return policy?", "answer": "<p>We offer a 30-day return policy. If the jersey doesn't fit or you're not happy, contact us and we'll sort it. Items must be unworn with tags attached.</p>" } },
+        { "type": "faq", "settings": { "question": "How do I pick the right size?", "answer": "<p>Check our size guide on each product page. We recommend measuring a jersey you already own and comparing. When in between sizes, go one size up for a comfortable fit.</p>" } },
+        { "type": "faq", "settings": { "question": "Do you ship outside Europe?", "answer": "<p>Currently we ship across the EU. We're working on expanding to the UK and Brazil. Sign up for our newsletter to be notified when we add new shipping regions.</p>" } },
+        { "type": "faq", "settings": { "question": "Can I customise a jersey with a name and number?", "answer": "<p>Customisation options are coming soon. For now, we offer the standard club/team designs. Follow us on Instagram @twotrim for updates.</p>" } },
+        { "type": "faq", "settings": { "question": "What payment methods do you accept?", "answer": "<p>We accept Visa, Mastercard, MB Way, PayPal, and Apple Pay. All transactions are processed securely through Shopify Payments.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

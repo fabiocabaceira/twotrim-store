@@ -1,0 +1,73 @@
+<section class="section">
+  <div class="container">
+    <p class="heading-sm text-center">{{ section.settings.kicker }}</p>
+    <h2 class="heading-lg text-center" style="margin-top:8px;margin-bottom:32px">{{ section.settings.title }}</h2>
+
+    <div class="reviews__grid">
+      {% for block in section.blocks %}
+        <div class="review" {{ block.shopify_attributes }}>
+          <div class="review__stars">★★★★★</div>
+          <p class="review__text">"{{ block.settings.text }}"</p>
+          <p class="review__author">{{ block.settings.author }}</p>
+          <p class="review__meta">{{ block.settings.meta }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Reviews"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "What Fans Are Saying"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text",
+          "default": "Quality is insane for the price. My Benfica kit looks exactly like the real thing."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author name",
+          "default": "Miguel R."
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Meta (location/product)",
+          "default": "Lisbon · Benfica Home 24/25"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews",
+      "blocks": [
+        { "type": "review", "settings": { "text": "Quality is insane for the price. My Benfica kit looks exactly like the real thing.", "author": "Miguel R.", "meta": "Lisbon · Benfica Home 24/25" } },
+        { "type": "review", "settings": { "text": "Ordered a Porto away kit. Arrived in 10 days to Porto. Fit is perfect, fabric feels premium.", "author": "João P.", "meta": "Porto · Porto Away 24/25" } },
+        { "type": "review", "settings": { "text": "Got the Sporting third kit for my brother's birthday. He thought it was official. Enough said.", "author": "Ana S.", "meta": "Braga · Sporting Third 24/25" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
